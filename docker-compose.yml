@@ -1,0 +1,13 @@
+version: '3'
+services:
+    apache2:
+        build: .
+        container_name: expense_manager
+        volumes:
+            - ./logs:/var/log/apache2/
+            - ./:/var/www/html
+        ports:
+            - "8081:80"
+        restart: always
+        external_links:
+        - "mysql:mysql"

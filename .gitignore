@@ -1,18 +1,31 @@
-*/config/development
-*/logs/log-*.php
-!*/logs/index.html
-*/cache/*
-!system/cache/*
-!*/cache/index.html
-!*/cache/.htaccess
+# CodeIgniter specific
+/.env
+/writable/*
+!/writable/.gitkeep
+/vendor
 
-user_guide_src/build/*
-user_guide_src/cilexer/build/*
-user_guide_src/cilexer/dist/*
-user_guide_src/cilexer/pycilexer.egg-info/*
+# System files
+/app/Config/Development/*
+/app/Config/Testing/*
+/app/Config/Production/*
 
-#codeigniter 3
-application/logs/*
-!application/logs/index.html
-!application/logs/.htaccess
-/vendor/
+# IDE files
+.vscode
+.idea
+*.sublime-project
+*.sublime-workspace
+
+# Logs and caches
+/app/Logs/
+writable/logs/
+writable/debugbar/
+writable/cache/
+
+# Miscellaneous
+node_modules/
+npm-debug.log
+yarn-error.log
+Thumbs.db
+.DS_Store
+
+logs/

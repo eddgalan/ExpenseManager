@@ -5,7 +5,8 @@ RUN apt update && apt install -y libicu-dev && rm -rf /var/lib/apt/lists/*
 RUN docker-php-ext-install intl \ 
     && docker-php-ext-configure intl \
     && docker-php-ext-install mysqli \
-    && docker-php-ext-enable mysqli
+    && docker-php-ext-enable mysqli \
+    && apt update
 ENV PHP_INI_FILE php.ini-development
 WORKDIR /var/www/html
 RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer

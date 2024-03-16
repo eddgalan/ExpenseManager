@@ -7,6 +7,7 @@ RUN docker-php-ext-install intl \
     && docker-php-ext-install mysqli \
     && docker-php-ext-enable mysqli \
     && apt update
+COPY configFiles/000-default.conf /etc/apache2/sites-available/000-default.conf
 ENV PHP_INI_FILE php.ini-development
 WORKDIR /var/www/html
 RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer

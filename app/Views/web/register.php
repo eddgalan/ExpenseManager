@@ -9,21 +9,7 @@
                     <form method="POST" action="<?= base_url('register/create'); ?>">
                         <?= csrf_field(); ?>
                         <h2 class="text-center mt-4 mb-5">Register</h2>
-                        <div class="mb-3">
-                            <?php if(session()->has('errors')): ?>
-                                <div class="alert alert-danger">
-                                    <ul>
-                                        <?php if (is_array(session('errors'))): ?>
-                                            <?php foreach(session('errors') as $error): ?>
-                                                <li><?= esc($error) ?></li>
-                                            <?php endforeach; ?>
-                                        <?php else: ?>
-                                            <li><?= esc(session('errors')) ?></li>
-                                        <?php endif; ?>
-                                    </ul>
-                                </div>
-                            <?php endif; ?>
-                        </div>
+                        <?= view('web/static_components/alerts_messages.php'); ?>
                         <div class="mb-3">
                             <label for="firstname" class="form-label">Firstname: <spam class="text-danger">*</spam></label>
                             <input type="text" class="form-control" name="firstname" id="firstname" placeholder="" 

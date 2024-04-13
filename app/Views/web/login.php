@@ -6,15 +6,8 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
-                    <form method="POST" action="<?= base_url('login'); ?>">
+                    <form method="POST" action="<?= route_to('loginAuthenticate'); ?>">
                         <h2 class="text-center mt-4 mb-5">Login</h2>
-                        <?php if(session()->has('success')): ?>
-                            <div class="alert alert-success">
-                                <ul class="m-0">
-                                    <li><?= esc(session('success')) ?></li>
-                                </ul>
-                            </div>
-                        <?php endif; ?>
                         <?= view('web/static_components/alerts_messages') ?>
                         <div class="mb-3">
                             <label for="username" class="form-label">Username or email: <spam class="text-danger">*</spam> </label>
@@ -26,7 +19,7 @@
                         </div>
                         <button type="submit" class="btn btn-primary w-100 p-3">Login</button>
                         <div class="mt-3 text-center">
-                            <a href="<?= base_url('register') ?>" class="text-decoration-none">Register now</a>
+                            <a href="<?= route_to('registerCreate') ?>" class="text-decoration-none">Register now</a>
                         </div>
                     </form>
                 </div>

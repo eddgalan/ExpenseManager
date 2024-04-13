@@ -1,7 +1,7 @@
 <div class="mb-3">
     <?php /** Success */ ?>
     <?php if(session()->has('success')): ?>
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
             <ul class="mb-0">
                 <?php if (is_array(session('success'))): ?>
                     <?php foreach(session('success') as $error): ?>

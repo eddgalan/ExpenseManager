@@ -6,7 +6,7 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
-                    <form method="POST" action="<?= base_url('register/create'); ?>">
+                    <form method="POST" action="<?= route_to('registerPost'); ?>">
                         <?= csrf_field(); ?>
                         <h2 class="text-center mt-4 mb-5">Register</h2>
                         <?= view('web/static_components/alerts_messages.php'); ?>
@@ -33,7 +33,7 @@
                 </div>
             </div>
             <div class="mt-3 mb-3 text-center">
-                <a href="<?= base_url('login') ?>" class="text-decoration-none">Login</a>
+                <a href="<?= route_to('loginForm') ?>" class="text-decoration-none">Login</a>
             </div>
         </div>
     </div>

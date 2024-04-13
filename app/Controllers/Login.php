@@ -3,16 +3,19 @@
 namespace App\Controllers;
 
 use CodeIgniter\Controller;
-use App\Models\UserModel;
 use CodeIgniter\HTTP\RedirectResponse;
+use App\Models\UserModel;
+use App\Helpers\SessionHelper;
 
 class Login extends Controller
 {
     private $userModel;
+    private $sessionHelper;
 
     public function __construct()
     {
         $this->userModel = new UserModel();
+        $this->sessionHelper = new SessionHelper();
     }
 
     /**
@@ -22,7 +25,7 @@ class Login extends Controller
      */
     public function index()
     {
-        return view('web/login');
+        return $this->sessionHelper->isLoggedIn() ? redirect()->to(route_to('dashboard')) : view('web/login');
     }
 
     /**
@@ -36,24 +39,22 @@ class Login extends Controller
         $password = $this->request->getPost('password');
         $userResult = $this->userModel->where('username', $username)->orWhere('email', $username)->findAll(1);
         if (count($userResult) === 0) {
-            return redirect()->to('login')->with('errors', 'Username/password incorrect.');
+            return redirect()->to(route_to('loginForm'))->with('errors', 'Username/password incorrect.');
         }
         $user = $userResult[0];
         $isUserAuth = $user->authenticate($password);
         if (!$isUserAuth) {
-            return redirect()->to('login')->with('errors', 'Username/password incorrect.');
+            return redirect()->to(route_to('loginForm'))->with('errors', 'Username/password incorrect.');
         }
         $userData = [
             'id' => $user->id,
             'firstname' => $user->firstname,
             'lastname' => $user->lastname,
-            'fullname' => "$user->firstname $user->lastname",
             'username' => $user->username,
             'email' => $user->email,
         ];
-        $session = session();
-        $session->set(['user' => $userData]);
-        return redirect()->to('dashboard');
+        $this->sessionHelper->setUserSession($userData);
+        return redirect()->to(route_to('dashboard'));
     }
 
     /**
@@ -72,9 +73,9 @@ class Login extends Controller
      * 
      * @return string
      */
-    public function registerForm()
+    public function registerCreate()
     {
-        return view('web/register');
+        return $this->sessionHelper->isLoggedIn() ? redirect()->to(route_to('dashboard')) : view('web/register');
     }
 
     /**
@@ -82,7 +83,7 @@ class Login extends Controller
      * 
      * @return RedirectResponse
      */
-    public function registerCreate()
+    public function registerStore()
     {
         if (!$this->validate($this->userModel->validationRules)) {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
@@ -101,9 +102,9 @@ class Login extends Controller
         ];
         try {
             $this->userModel->insert($userData);
-            return redirect()->to('login')->with('success', 'User created');
+            return redirect()->to(route_to('loginForm'))->with('success', 'User created.');
         } catch (\Exception $e) {
-            return redirect()->to('register')->with('errors', "Error creating user: {$e->getMessage()}");
+            return redirect()->to(route_to('registerCreate'))->with('errors', "Error creating user: {$e->getMessage()}");
         }
     }
 

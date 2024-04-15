@@ -1,4 +1,4 @@
-<?= $this->extend('web/base'); ?>
+<?= $this->extend('base'); ?>
 
 <?= $this->section('content'); ?>
 <div class="container vh-100 pt-5">
@@ -8,7 +8,7 @@
                 <div class="card-body">
                     <form method="POST" action="<?= route_to('loginAuthenticate'); ?>">
                         <h2 class="text-center mt-4 mb-5">Login</h2>
-                        <?= view('web/static_components/alerts_messages') ?>
+                        <?= view('static_components/alerts_messages') ?>
                         <div class="mb-3">
                             <label for="username" class="form-label">Username or email: <spam class="text-danger">*</spam> </label>
                             <input type="text" class="form-control" name="username" id="username" autocomplete="off">

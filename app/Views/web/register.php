@@ -1,4 +1,4 @@
-<?= $this->extend('web/base'); ?>
+<?= $this->extend('base'); ?>
 
 <?= $this->section('content'); ?>
 <div class="container vh-100 pt-5">
@@ -9,7 +9,7 @@
                     <form method="POST" action="<?= route_to('registerPost'); ?>">
                         <?= csrf_field(); ?>
                         <h2 class="text-center mt-4 mb-5">Register</h2>
-                        <?= view('web/static_components/alerts_messages.php'); ?>
+                        <?= view('static_components/alerts_messages.php'); ?>
                         <div class="mb-3">
                             <label for="firstname" class="form-label">Firstname: <spam class="text-danger">*</spam></label>
                             <input type="text" class="form-control" name="firstname" id="firstname" placeholder="" 

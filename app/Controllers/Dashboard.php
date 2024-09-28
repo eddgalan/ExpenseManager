@@ -2,7 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Controllers\BaseController;
 use App\Helpers\SessionHelper;
 
 class Dashboard extends BaseController
@@ -10,7 +9,7 @@ class Dashboard extends BaseController
     /**
      * @var SessionHelper
      */
-    private $sessionHelper;
+    private SessionHelper $sessionHelper;
 
     public function __construct()
     {
@@ -26,7 +25,7 @@ class Dashboard extends BaseController
         if (!$this->sessionHelper->isLoggedIn()) {
             return redirect()->to(route_to('loginForm'));
         }
-        echo "Welcome {$this->sessionHelper->getUserFullname()}";
+        return view('web/dashboard/index');
     }
 
 }

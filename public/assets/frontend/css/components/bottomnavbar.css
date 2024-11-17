@@ -1,0 +1,20 @@
+nav.bottomNavbar {
+    margin-top: auto;
+    height: 60px;
+    font-size: 0.8rem;
+}
+nav.bottomNavbar {
+    background-color: #17A2B8 !important;
+}
+nav.bottomNavbar a.nav-link {
+    color: #FFF;
+    font-size: 1rem !important;
+}
+nav.bottomNavbar a.nav-link span {
+    font-size: 0.7rem;
+}
+nav.bottomNavbar a.nav-link:hover, nav.bottomNavbar div.navItem {
+    font-weight: bold;
+    color:#343A40;
+    background-color: #04798c;
+}

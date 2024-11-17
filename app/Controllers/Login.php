@@ -5,7 +5,7 @@ namespace App\Controllers;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\RedirectResponse;
 use App\Models\UserModel;
-use App\Helpers\SessionHelper;
+use App\Helpers\SessionManager;
 
 class Login extends Controller
 {
@@ -15,7 +15,7 @@ class Login extends Controller
     public function __construct()
     {
         $this->userModel = new UserModel();
-        $this->sessionHelper = new SessionHelper();
+        $this->sessionHelper = new SessionManager();
     }
 
     /**

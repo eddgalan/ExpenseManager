@@ -8,6 +8,7 @@ use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
+use App\Services\SessionManager;
 
 /**
  * Class BaseController
@@ -21,6 +22,14 @@ use Psr\Log\LoggerInterface;
  */
 abstract class BaseController extends Controller
 {
+
+    /**
+     * Is used to Manage the User Session
+     *
+     * @var SessionManager
+     */
+    protected SessionManager $sessionManager;
+
     /**
      * Instance of the main Request object.
      *
@@ -44,9 +53,12 @@ abstract class BaseController extends Controller
     // protected $session;
 
     /**
+     * @param RequestInterface $request
+     * @param ResponseInterface $response
+     * @param LoggerInterface $logger
      * @return void
      */
-    public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
+    public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger): void
     {
         // Do Not Edit This Line
         parent::initController($request, $response, $logger);
@@ -54,5 +66,6 @@ abstract class BaseController extends Controller
         // Preload any models, libraries, etc, here.
 
         // E.g.: $this->session = \Config\Services::session();
+        $this->sessionManager = new SessionManager();
     }
 }

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Helpers;
+namespace App\Services;
 
-use \Config\Services;
-use \CodeIgniter\Session\Session;
+use Config\Services;
+use CodeIgniter\Session\Session;
 
-class SessionManager
+abstract class AbstractSessionManager
 {
     /**
      * @var Session
@@ -17,7 +17,8 @@ class SessionManager
      */
     private array $userData;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->session = Services::session();
         $this->userData = $this->session->has('userSession') ? $this->session->get('userSession') : [];
     }
@@ -27,8 +28,19 @@ class SessionManager
      *
      * @return bool
      */
-    public function isLoggedIn(): bool {
-        return count($this->userData) > 0;
+    public function isLoggedIn(): bool
+    {
+        return $this->session->has('userSession');
+    }
+
+    /**
+     * Destroy user session
+     *
+     * @return void
+     */
+    public function logout(): void
+    {
+        $this->session->destroy();
     }
 
     /**
@@ -37,7 +49,8 @@ class SessionManager
      * @param $userData
      * @return void
      */
-    public function setUserSession($userData): void {
+    public function setUserSession($userData): void
+    {
         $this->session->set(['userSession' => $userData]);
     }
 
@@ -46,7 +59,8 @@ class SessionManager
      *
      * @return array
      */
-    private function getUserSessionData(): array {
+    protected function getUserSessionData(): array
+    {
         return $this->userData;
     }
 
@@ -55,7 +69,8 @@ class SessionManager
      *
      * @return string
      */
-    public function getUsername(): string {
+    public function getUsername(): string
+    {
         return $this->userData['username'];
     }
 
@@ -64,7 +79,8 @@ class SessionManager
      *
      * @return string
      */
-    public function getFirstName(): string {
+    public function getFirstName(): string
+    {
         return $this->userData['firstname'];
     }
 
@@ -73,16 +89,18 @@ class SessionManager
      *
      * @return string
      */
-    public function getLastName(): string {
+    public function getLastName(): string
+    {
         return $this->userData['lastName'];
     }
 
     /**
-     * Return user fullname (concat firstname + lastname)
+     * Return user full name (concat firstname + lastname)
      *
      * @return string
      */
-    public function getFullName(): string {
+    public function getFullname(): string
+    {
         return "{$this->getFirstName()} {$this->getLastName()}";
     }
 
@@ -91,7 +109,8 @@ class SessionManager
      *
      * @return string
      */
-    public function getEmail(): string {
+    public function getEmail(): string
+    {
         return $this->userData['email'];
     }
 }

@@ -5,7 +5,7 @@ namespace App\Controllers;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\RedirectResponse;
 use App\Models\UserModel;
-use App\Helpers\SessionManager;
+use App\Services\SessionManager;
 
 class Login extends Controller
 {
@@ -17,12 +17,12 @@ class Login extends Controller
     /**
      * @var SessionManager
      */
-    private SessionManager $sessionHelper;
+    private SessionManager $sessionManager;
 
     public function __construct()
     {
         $this->userModel = new UserModel();
-        $this->sessionHelper = new SessionManager();
+        $this->sessionManager = new SessionManager();
     }
 
     /**
@@ -32,7 +32,7 @@ class Login extends Controller
      */
     public function index(): string|RedirectResponse
     {
-        return $this->sessionHelper->isLoggedIn() ? redirect()->to(route_to('dashboard')) : view('web/login');
+        return $this->sessionManager->isLoggedIn() ? redirect()->to(route_to('dashboard')) : view('web/login');
     }
 
     /**
@@ -64,7 +64,7 @@ class Login extends Controller
             'username' => $user->username,
             'email' => $user->email,
         ];
-        $this->sessionHelper->setUserSession($userData);
+        $this->sessionManager->setUserSession($userData);
         return redirect()->to(route_to('dashboard'));
     }
 
@@ -75,7 +75,7 @@ class Login extends Controller
      */
     public function logout(): RedirectResponse
     {
-        session()->destroy();
+        $this->sessionManager->logout();
         return redirect()->to('/login');
     }
 
@@ -86,7 +86,7 @@ class Login extends Controller
      */
     public function registerCreate(): string|RedirectResponse
     {
-        return $this->sessionHelper->isLoggedIn() ? redirect()->to(route_to('dashboard')) : view('web/register');
+        return $this->sessionManager->isLoggedIn() ? redirect()->to(route_to('dashboard')) : view('web/register');
     }
 
     /**

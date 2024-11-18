@@ -11,7 +11,7 @@
             <!-- Expenses -->
             <div class="col p-0 d-flex align-items-center justify-content-center">
                 <a class="nav-link d-flex flex-column align-items-center justify-content-center w-100 h-100"
-                   href="<?= route_to('expenses'); ?>"><i class="bi bi-cash-coin t"></i>
+                   href="<?= route_to('expenses.index'); ?>"><i class="bi bi-cash-coin t"></i>
                     <span class="d-block">Gastos</span>
                 </a>
             </div>

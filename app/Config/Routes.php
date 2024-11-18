@@ -14,4 +14,7 @@ $routes->get('register', 'Login::registerCreate', ['as' => 'registerCreate']);
 $routes->post('register', 'Login::registerStore', ['as' => 'registerPost']);
 /** Dashboard */
 $routes->get('dashboard', 'Dashboard::index', ['as' => 'dashboard', 'filter' => 'auth']);
-
+/** Expenses */
+$routes->group('expenses', ['namespace' => 'App\Controllers', 'filter' => 'auth'], function ($routes) {
+    $routes->get('/', 'Expenses::index', ['as' => 'expenses.index']);
+});

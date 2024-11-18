@@ -17,7 +17,7 @@
     <?= $this->include('web/frontend/components/navbar') ?>
 
     <!-- Content -->
-    <div class="container">
+    <div class="container py-3">
         <?= $this->renderSection('content'); ?>
     </div>
 

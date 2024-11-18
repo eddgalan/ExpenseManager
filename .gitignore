@@ -137,5 +137,8 @@ fabric.properties
 .idea/**/azureSettings.xml
 .idea/*
 writable/logs/
+writable/session/
+writable/debugbar/
 # End of https://www.toptal.com/developers/gitignore/api/phpstorm,codeigniter
 logs/
+.phpunit.result.cache

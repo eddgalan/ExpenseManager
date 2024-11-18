@@ -13,4 +13,5 @@ $routes->get('logout', 'Login::logout', ['as' => 'logout']);
 $routes->get('register', 'Login::registerCreate', ['as' => 'registerCreate']);
 $routes->post('register', 'Login::registerStore', ['as' => 'registerPost']);
 /** Dashboard */
-$routes->get('dashboard', 'Dashboard::index', ['as' => 'dashboard']);
+$routes->get('dashboard', 'Dashboard::index', ['as' => 'dashboard', 'filter' => 'auth']);
+

@@ -9,8 +9,15 @@ use App\Helpers\SessionManager;
 
 class Login extends Controller
 {
-    private $userModel;
-    private $sessionHelper;
+    /**
+     * @var UserModel
+     */
+    private UserModel $userModel;
+
+    /**
+     * @var SessionManager
+     */
+    private SessionManager $sessionHelper;
 
     public function __construct()
     {
@@ -21,9 +28,9 @@ class Login extends Controller
     /**
      * Show login form
      * 
-     * @return string
+     * @return string|RedirectResponse
      */
-    public function index()
+    public function index(): string|RedirectResponse
     {
         return $this->sessionHelper->isLoggedIn() ? redirect()->to(route_to('dashboard')) : view('web/login');
     }
@@ -33,18 +40,22 @@ class Login extends Controller
      * 
      * @return RedirectResponse
      */
-    public function authenticate()
+    public function authenticate(): RedirectResponse
     {
         $username = $this->request->getPost('username');
         $password = $this->request->getPost('password');
         $userResult = $this->userModel->where('username', $username)->orWhere('email', $username)->findAll(1);
         if (count($userResult) === 0) {
-            return redirect()->to(route_to('loginForm'))->with('errors', 'Username/password incorrect.');
+            return redirect()
+                ->to(route_to('loginForm'))
+                ->with('errors', 'Username/password incorrect.');
         }
         $user = $userResult[0];
         $isUserAuth = $user->authenticate($password);
         if (!$isUserAuth) {
-            return redirect()->to(route_to('loginForm'))->with('errors', 'Username/password incorrect.');
+            return redirect()
+                ->to(route_to('loginForm'))
+                ->with('errors', 'Username/password incorrect.');
         }
         $userData = [
             'id' => $user->id,
@@ -62,7 +73,7 @@ class Login extends Controller
      *
      * @return RedirectResponse
      */
-    public function logout()
+    public function logout(): RedirectResponse
     {
         session()->destroy();
         return redirect()->to('/login');
@@ -71,9 +82,9 @@ class Login extends Controller
     /**
      * Show register form
      * 
-     * @return string
+     * @return string|RedirectResponse
      */
-    public function registerCreate()
+    public function registerCreate(): string|RedirectResponse
     {
         return $this->sessionHelper->isLoggedIn() ? redirect()->to(route_to('dashboard')) : view('web/register');
     }
@@ -83,7 +94,7 @@ class Login extends Controller
      * 
      * @return RedirectResponse
      */
-    public function registerStore()
+    public function registerStore(): RedirectResponse
     {
         if (!$this->validate($this->userModel->validationRules)) {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
@@ -107,5 +118,4 @@ class Login extends Controller
             return redirect()->to(route_to('registerCreate'))->with('errors', "Error creating user: {$e->getMessage()}");
         }
     }
-
 }
